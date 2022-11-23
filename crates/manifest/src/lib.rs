@@ -10,6 +10,7 @@ use std::{
 
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
+use schemars::JsonSchema;
 
 /// A trigger error.
 #[derive(Debug, thiserror::Error)]
@@ -108,7 +109,7 @@ pub enum ApplicationOrigin {
 }
 
 /// The trigger type.
-#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize, JsonSchema)]
 #[serde(deny_unknown_fields, rename_all = "camelCase", tag = "type")]
 pub enum ApplicationTrigger {
     /// HTTP trigger type.
@@ -118,7 +119,7 @@ pub enum ApplicationTrigger {
 }
 
 /// HTTP trigger configuration.
-#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize, JsonSchema)]
 pub struct HttpTriggerConfiguration {
     /// Base path for the HTTP application.
     pub base: String,
@@ -142,7 +143,7 @@ impl TryFrom<ApplicationTrigger> for HttpTriggerConfiguration {
 }
 
 /// Redis trigger configuration.
-#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize, JsonSchema)]
 pub struct RedisTriggerConfiguration {
     /// Address of Redis server.
     pub address: String,
@@ -205,7 +206,7 @@ impl Debug for ModuleSource {
     }
 }
 /// Configuration for the HTTP trigger.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, JsonSchema)]
 pub struct HttpConfig {
     /// HTTP route the component will be invoked for.
     pub route: String,
@@ -227,7 +228,7 @@ impl Default for HttpConfig {
 /// or the Wagi CGI interface.
 ///
 /// If an executor is not specified, the inferred default is `HttpExecutor::Spin`.
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, JsonSchema)]
 #[serde(deny_unknown_fields, rename_all = "camelCase", tag = "type")]
 pub enum HttpExecutor {
     /// The component implements the Spin HTTP interface.
@@ -243,7 +244,7 @@ impl Default for HttpExecutor {
 }
 
 /// Wagi specific configuration for the http executor.
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, JsonSchema)]
 #[serde(default, deny_unknown_fields, rename_all = "camelCase")]
 pub struct WagiConfig {
     /// The name of the entrypoint.
@@ -274,7 +275,7 @@ impl Default for WagiConfig {
 }
 
 /// Configuration for the Redis trigger.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, JsonSchema)]
 pub struct RedisConfig {
     /// Redis channel to subscribe.
     pub channel: String,
@@ -285,7 +286,7 @@ pub struct RedisConfig {
 /// The executor for the Redis component.
 ///
 /// If an executor is not specified, the inferred default is `RedisExecutor::Spin`.
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, JsonSchema)]
 #[serde(deny_unknown_fields, rename_all = "camelCase", tag = "type")]
 pub enum RedisExecutor {
     /// The component implements the Spin Redis interface.
@@ -299,7 +300,7 @@ impl Default for RedisExecutor {
 }
 
 /// Trigger configuration.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, JsonSchema)]
 #[serde(deny_unknown_fields, rename_all = "camelCase", untagged)]
 pub enum TriggerConfig {
     /// HTTP trigger configuration

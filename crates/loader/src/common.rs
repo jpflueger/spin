@@ -1,9 +1,10 @@
 use anyhow::ensure;
 use serde::{Deserialize, Serialize};
 use spin_manifest::Variable;
+use schemars::JsonSchema;
 
 /// Variable configuration.
-#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize, JsonSchema)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct RawVariable {
     /// If set, this variable is required; may not be set with `default`.

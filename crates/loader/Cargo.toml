@@ -27,3 +27,5 @@ tokio-util = "0.6"
 toml = "0.5"
 tracing = { version = "0.1", features = [ "log" ] }
 walkdir = "2.3.2"
+schemars = "0.8.11"
+serde_json = "1.0.82"
